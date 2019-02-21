@@ -1,0 +1,40 @@
+<html>
+
+
+
+
+<input id="slider-x" type="range" min="1" max="160" value="20" oninput="moveSlider(this, 'x')"><br>
+<input id="slider-y" type="range" min="1" max="140" value="10" oninput="moveSlider(this, 'y')"><br>
+<input id="slider-z" type="range" min="1" max="140" value="10" oninput="moveSlider1(this, 'r')"><br>
+
+
+
+
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 200">
+  <rect width="300" height="300" fill="#eee"></rect>
+  <circle id="target" cx="100" cy="100" r="30"></circle>
+</svg>
+
+
+
+
+<script type="text/javascript">
+
+
+
+var moveSlider = function(slider, direction) {
+	var value = slider.value;
+	var circle = document.getElementById("target");
+	circle.setAttributeNS(null, "c" + direction, value);
+}
+
+
+
+var moveSlider1 = function(slider, direction) {
+	var value = slider.value;
+	var circle = document.getElementById("target");
+	circle.setAttributeNS(null,direction, value);
+}
+
+</script>
+</html>
