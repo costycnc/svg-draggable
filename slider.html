@@ -1,40 +1,130 @@
 <html>
+<head>
+	<!-- https://github.com/costycnc/svg-draggable -->
+	<title>Costel - SVG draggable</title>
+
+	<style>
+		#actionsTable td{
+			padding-right: 20px;
+		}
+
+		#statusWrapper {
+			margin-top: 10px;
+			margin-bottom: 20px;
+		}
+
+		#SVGContainer {
+		}
+	</style>
+</head>	
+<body>
 
 
+<table id="actionsTable">
+	<tr>
+		<td>Controls</td>
+		<td>Add SVG</td>
+	</tr>
+	<tr>
+		<td>
+			<input 
+				id="sliderCX" 
+				type="range" 
+				min="-200" max="200" 
+				value="20" 
+				oninput="moveSVGTarget(this.value, 'cx');"
+			/>
 
+			<br />
+			<input 
+				id="sliderCY" 
+				type="range" 
+				min="-200" max="200" 
+				value="10" 
+				oninput="moveSVGTarget(this.value, 'cy');"
+			/>
+			
+			<br />
+			<input 
+				id="sliderR" 
+				type="range"
+				min="1" max="140"
+				value="10"
+				oninput="moveSVGTarget(this.value, 'r');"
+			/>
+		</td>
+		<td>
+			<!-- e nevoie de butonul asta in librarie -->
+			<input 
+				id="btnReadSVGFromDisk" 
+				type="file"
+			/>
+		</td>
+	</tr>
+</table>
 
-<input id="slider-x" type="range" min="1" max="160" value="20" oninput="moveSlider(this, 'x')"><br>
-<input id="slider-y" type="range" min="1" max="140" value="10" oninput="moveSlider(this, 'y')"><br>
-<input id="slider-z" type="range" min="1" max="140" value="10" oninput="moveSlider1(this, 'r')"><br>
+<!-- e nevoie de obiectul asta in librarie -->
+<div id="statusWrapper"></div>
 
-
-
-
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 200">
+<svg id="SVGContainer" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 200">
   <rect width="300" height="300" fill="#eee"></rect>
-  <circle id="target" cx="100" cy="100" r="30"></circle>
+  <circle 
+  	onclick="setSVGTarget(this.id)" 
+  	id="target" 
+  	cx="100" 
+  	cy="100" 
+  	r="30"
+  ></circle>
 </svg>
 
 
-
-
 <script type="text/javascript">
+	// asta va fi variabila de control care va tine identificatorul svg-ului selectat
+	// initial este "target", dar daca adaugi alte svg-uri se va schimba
+	var SVG_TARGET_ELEMENT = "target";
+	var SVGS_COORDINATES = {};
 
+	// cu functia asta poti sa setezei care este id-ul obiectului "<path>" curent
+	// e folosita de librarie
+	// poti sa o modifici daca vrei, dar trebuie sa existe
+	function setSVGTarget(targetID) {
+		if(SVG_TARGET_ELEMENT == targetID) return;
 
+		// seteaza noul id
+		SVG_TARGET_ELEMENT = targetID;
 
-var moveSlider = function(slider, direction) {
-	var value = slider.value;
-	var circle = document.getElementById("target");
-	circle.setAttributeNS(null, "c" + direction, value);
-}
+		// asta e callback-ul din librarie
+		// poti sa o schimbi daca ai nevoie
+		_svgDiskManager.ops.setSVGTarget(targetID)
 
+		_msg(SVG_TARGET_ELEMENT + "' selected");	
+	}
 
+	// cu functia asta poti sa muti obiectul "<path>" curent pe ecran
+	function moveSVGTarget(nValue, direction) {
+		var svg = _ID(SVG_TARGET_ELEMENT);
 
-var moveSlider1 = function(slider, direction) {
-	var value = slider.value;
-	var circle = document.getElementById("target");
-	circle.setAttributeNS(null,direction, value);
-}
+		if( ! svg) {
+			_msg("Could not find SVG element with ID " + SVG_TARGET_ELEMENT, MB_ERROR);
+			return;
+		}
 
+		// ce e "<path>"
+		// asta e callback-ul din librarie
+		// poti sa o schimbi daca ai nevoie
+		if(svg.tagName == "path") {
+			_svgDiskManager.ops.moveSVGTarget(nValue, direction);
+			return;	
+		}
+
+		// ce nu e "<path>"
+		svg.setAttributeNS(null, direction, nValue);
+	}
 </script>
+
+<!-- librariile se incarca la sfarsit pentru folosesc ce e mai sus -->
+<script src="js/functions.js"></script>
+<script src="js/svgDiskManager.js"></script>
+
+</body>
 </html>
