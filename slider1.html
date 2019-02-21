@@ -3,9 +3,9 @@
 
 
 
-<input id="slider-x" type="range" min="1" max="160" value="20" oninput="moveSlider(this, 'x')"><br>
-<input id="slider-y" type="range" min="1" max="140" value="10" oninput="moveSlider(this, 'y')"><br>
-<input id="slider-z" type="range" min="1" max="140" value="10" oninput="moveSlider1(this, 'r')"><br>
+<input id="slider-x" type="range" min="1" max="160" value="20" oninput="moveSlider(this, 'cx')"><br>
+<input id="slider-y" type="range" min="1" max="140" value="10" oninput="moveSlider(this, 'cy')"><br>
+<input id="slider-z" type="range" min="1" max="140" value="10" oninput="moveSlider(this, 'r')"><br>
 
 
 
@@ -25,15 +25,7 @@
 var moveSlider = function(slider, direction) {
 	var value = slider.value;
 	var circle = document.getElementById("target");
-	circle.setAttributeNS(null, "c" + direction, value);
-}
-
-
-
-var moveSlider1 = function(slider, direction) {
-	var value = slider.value;
-	var circle = document.getElementById("target");
-	circle.setAttributeNS(null,direction, value);
+	circle.setAttributeNS(null, direction, value);
 }
 
 </script>
