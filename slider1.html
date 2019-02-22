@@ -7,6 +7,7 @@
 <input id="slider-y" type="range" min="1" max="140" value="10" oninput="moveSlider(this, 'cy')"><br>
 <input id="slider-z" type="range" min="1" max="140" value="10" oninput="moveSlider(this, 'r')"><br>
 <button onclick="myFunction()">Delete</button>
+<button onclick="myFunction1()">Circle</button>
 
 
 
@@ -19,9 +20,22 @@
 
 
 <script type="text/javascript">
-
-function myFunction(){
 var svg = document.getElementsByTagName('svg')[0];
+
+function myFunction1(){
+var element = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+svg.appendChild(element);
+//get attributes
+//var y = parseFloat(element.getAttributeNS(null, 'y'));
+//set attributes
+//element.setAttributeNS(null, 'cy', y + 10);
+element.setAttributeNS(null, 'cx', 100);
+element.setAttributeNS(null, 'cy', 100);
+element.setAttributeNS(null, 'r', 30);
+element.setAttributeNS(null, 'id', "costy");
+
+}
+function myFunction(){
 var element = document.getElementById('target');
 svg.removeChild(element);
 
