@@ -13,16 +13,23 @@
 
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 200">
   <rect width="300" height="300" fill="#eee"></rect>
-  <circle id="target" cx="100" cy="100" r="30"></circle>
+  <circle onclick="setSVGTarget(this.id)" id="costy" cx="100" cy="100" r="30"></circle>
+
 </svg>
-
-
 
 
 <script type="text/javascript">
 var svg = document.getElementsByTagName('svg')[0];
+var SVG_TARGET_ELEMENT = "costy";
+var nIndex=0;
+
+function setSVGTarget(targetID) 
+{SVG_TARGET_ELEMENT = targetID;}
+
+
 
 function myFunction1(){
+nIndex++;
 var element = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
 svg.appendChild(element);
 //get attributes
@@ -32,18 +39,19 @@ svg.appendChild(element);
 element.setAttributeNS(null, 'cx', 100);
 element.setAttributeNS(null, 'cy', 100);
 element.setAttributeNS(null, 'r', 30);
-element.setAttributeNS(null, 'id', "costy");
+element.setAttributeNS(null, 'id', "costy"+nIndex);
+element.setAttributeNS(null, 'onclick', "setSVGTarget(this.id)");
 
 }
 function myFunction(){
-var element = document.getElementById('target');
+var element = document.getElementById(SVG_TARGET_ELEMENT);
 svg.removeChild(element);
 
 }
 
 var moveSlider = function(slider, direction) {
 	var value = slider.value;
-	var circle = document.getElementById("target");
+	var circle = document.getElementById(SVG_TARGET_ELEMENT);
 	circle.setAttributeNS(null, direction, value);
 }
 
