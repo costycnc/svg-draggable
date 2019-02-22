@@ -6,7 +6,7 @@
 <input id="slider-x" type="range" min="1" max="160" value="20" oninput="moveSlider(this, 'cx')"><br>
 <input id="slider-y" type="range" min="1" max="140" value="10" oninput="moveSlider(this, 'cy')"><br>
 <input id="slider-z" type="range" min="1" max="140" value="10" oninput="moveSlider(this, 'r')"><br>
-
+<button onclick="myFunction()">Delete</button>
 
 
 
@@ -20,7 +20,12 @@
 
 <script type="text/javascript">
 
+function myFunction(){
+var svg = document.getElementsByTagName('svg')[0];
+var element = document.getElementById('target');
+svg.removeChild(element);
 
+}
 
 var moveSlider = function(slider, direction) {
 	var value = slider.value;
