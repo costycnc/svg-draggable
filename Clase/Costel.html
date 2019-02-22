@@ -1,0 +1,86 @@
+<html>
+<head>
+	<title>Costel - Clase</title>
+</head>
+<body>
+	<script>
+		var CostelArray = [
+			"Costel",
+			"Marius"
+		];
+		// console.log(CostelArray);
+
+		var CostelObject = {
+			"Costel": "Italia",
+			"Marius": "Romania"
+		};
+		// console.log(CostelObject);
+
+		var Costy = {
+			"Locatie" : {
+				"Tara": "Italia",
+				"Oras": "Bovalino",
+				"Telefoane": [
+					"021...",
+					"072..."
+				]
+			},
+
+			salut: function () {
+				alert("salut");
+			}
+		};
+
+	</script>
+
+
+	<script>
+
+	function addSVGCallback(file) {
+		return function(event) {
+			// escape(file.name);
+			// continutul fisierului
+			var szRaw = event.target.result;
+
+			alert(szRaw);
+		};
+	}
+
+
+	// functia care incepe citire fisierului
+	function addSVG(event) {
+		console.log("addSVG event");
+		console.log(event);
+
+		// citesti informatii despre fisierul selectat
+		var file = event.target.files[0];
+
+		var 	fileReader = new FileReader();
+
+		// Closure to capture the file information.
+		fileReader.onload = (addSVGCallback)(file);
+
+		// Read in the image file as a data URL.
+		fileReader.readAsText(file);
+		// fileReader.readAsBinaryString(file);
+	}
+
+
+	// exemplu event (nu face parte din program)
+	function exempluMouseMove(event) {
+		console.log("mouseMove event");
+		console.log(event);
+	}
+	</script>
+
+	<input 
+		id="btnReadSVGFromDisk"
+		type="file" 
+		onchange="addSVG(event)" 
+
+
+		onmousemove="exempluMouseMove(event)"
+	/>
+
+</body>
+</html>
