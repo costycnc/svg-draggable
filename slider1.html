@@ -6,7 +6,6 @@
 
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 200" onload="makeDraggable(evt)">
   <rect width="300" height="300" fill="#eee"></rect>
-  <circle class="draggable" id="costy" cx="100" cy="100" r="30"></circle>
 
 </svg>
 
@@ -16,15 +15,15 @@
 var SVG_TARGET_ELEMENT = "costy";
 var nIndex=0;
 var selectedElement = false;
-var svg;
-var coord;
+var offset;
+var svg,tmpx,tmpy;
 //########## when click "Circle" button >>> create new element
 function myFunction1(){
 nIndex++;
 var element = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
 svg.appendChild(element);
-element.setAttributeNS(null, 'cx', 100);
-element.setAttributeNS(null, 'cy', 100);
+element.setAttributeNS(null, 'x', 0);
+element.setAttributeNS(null, 'y', 0);
 element.setAttributeNS(null, 'r', 30);
 element.setAttributeNS(null, 'id', "costy"+nIndex);
 element.setAttributeNS(null, 'class', "draggable");
@@ -41,15 +40,14 @@ console.log(bro);
 nIndex++;
 var element = document.createElementNS('http://www.w3.org/2000/svg', 'path');
 svg.appendChild(element);
-element.setAttributeNS(null, 'cx',100);
-element.setAttributeNS(null, 'cy',100);
+element.setAttributeNS(null, 'x', 0);
+element.setAttributeNS(null, 'y', 0);
 element.setAttributeNS(null, 'id', "costy"+nIndex);
 element.setAttributeNS(null, 'class', "draggable");
-element.setAttributeNS(null, 'path', bro);
+element.setAttributeNS(null, 'd', bro);
 element.setAttributeNS(null, 'fill', "black");
 element.setAttributeNS(null, 'fill-rule', "evenodd");
 element.setAttributeNS(null, 'stroke', "none");
-element.setAttributeNS(null, 'transform', '"translate("+coord.x+","coord.y+")"');
 }
 
 //delete element
@@ -67,13 +65,28 @@ function makeDraggable(evt) {
        if (evt.target.classList.contains('draggable')) {
           selectedElement = evt.target;
           SVG_TARGET_ELEMENT=selectedElement.id;
-          console.log(selectedElement.id);}}
+
+    offset = getMousePosition(evt);
+    offset.x -= parseFloat(selectedElement.getAttributeNS(null, "x"));
+    offset.y -= parseFloat(selectedElement.getAttributeNS(null, "y"));
+
+          }}
      function drag(evt) {
        if (selectedElement) {
           evt.preventDefault();
-          coord = getMousePosition(evt);
-          selectedElement.setAttributeNS(null, "cx", coord.x);
-          selectedElement.setAttributeNS(null, "cy", coord.y);}}
+          var coord = getMousePosition(evt);
+
+tmpx=coord.x-offset.x;
+tmpy=coord.y-offset.y
+    selectedElement.setAttributeNS(null, "x", tmpx);
+    selectedElement.setAttributeNS(null, "y", tmpy);
+
+
+
+          selectedElement.setAttributeNS(null, "transform","translate("+tmpx+","+tmpy+")");
+
+
+}}
   
     function endDrag(evt) {
        selectedElement = null;}
