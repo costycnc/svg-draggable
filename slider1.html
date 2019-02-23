@@ -17,6 +17,7 @@ var SVG_TARGET_ELEMENT = "costy";
 var nIndex=0;
 var selectedElement = false;
 var svg;
+var coord;
 //########## when click "Circle" button >>> create new element
 function myFunction1(){
 nIndex++;
@@ -48,6 +49,7 @@ element.setAttributeNS(null, 'path', bro);
 element.setAttributeNS(null, 'fill', "black");
 element.setAttributeNS(null, 'fill-rule', "evenodd");
 element.setAttributeNS(null, 'stroke', "none");
+element.setAttributeNS(null, 'transform', '"translate("+coord.x+","coord.y+")"');
 }
 
 //delete element
@@ -69,7 +71,7 @@ function makeDraggable(evt) {
      function drag(evt) {
        if (selectedElement) {
           evt.preventDefault();
-          var coord = getMousePosition(evt);
+          coord = getMousePosition(evt);
           selectedElement.setAttributeNS(null, "cx", coord.x);
           selectedElement.setAttributeNS(null, "cy", coord.y);}}
   
