@@ -39,28 +39,14 @@ element.setAttributeNS(null, 'class', "draggable");
 function myFunction2(el){
 
 
+var tc="<html><body>bla</body></html>";
 
-
-var doc = document.implementation.createDocument ('http://www.w3.org/1999/xhtml', 'html', null);
-var body = document.createElementNS('http://www.w3.org/1999/xhtml', 'body');
-body.setAttribute('id', 'abc');
-doc.documentElement.appendChild(body);
-alert(doc.getElementById('abc')); // [object HTMLBodyElement]
-
+var doc = document.implementation.createHTMLDocument("test"); 
+doc.write(el);
 console.log(doc);
 
 
 var d = document.implementation.createDocument('http://www.w3.org/2000/svg', 'svg', null);
-
-nIndex++;
-var element = d.createElementNS('http://www.w3.org/2000/svg', 'path');
-svg.appendChild(element);
-element.setAttributeNS(null, 'cx', 100);
-element.setAttributeNS(null, 'cy', 100);
-element.setAttributeNS(null, 'r', 30);
-element.setAttributeNS(null, 'id', "costy"+nIndex);
-element.setAttributeNS(null, 'class', "draggable");
- 
 
 
 
