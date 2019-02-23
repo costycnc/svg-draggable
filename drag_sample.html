@@ -1,0 +1,53 @@
+<html>
+
+
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 200" onload="makeDraggable(evt)">
+  <circle class="draggable" cx="100" cy="100" r="30"></circle>
+
+</svg>
+
+
+<script type="text/javascript">
+var selectedElement = false;
+var svg;
+
+
+function makeDraggable(evt) {
+  svg = evt.target;
+  svg.addEventListener('mousedown', startDrag);
+  svg.addEventListener('mousemove', drag);
+  svg.addEventListener('mouseup', endDrag);
+  svg.addEventListener('mouseleave', endDrag);
+
+  function startDrag(evt) {
+
+if (evt.target.classList.contains('draggable')) {
+    selectedElement = evt.target;
+console.log(selectedElement);
+  }
+  }
+  function drag(evt) {
+ if (selectedElement) {
+    evt.preventDefault();
+    var coord = getMousePosition(evt);
+    selectedElement.setAttributeNS(null, "cx", coord.x);
+    selectedElement.setAttributeNS(null, "cy", coord.y);
+
+  }
+
+  }
+  function endDrag(evt) {
+selectedElement = null;
+  }
+}
+
+function getMousePosition(evt) {
+  var CTM = svg.getScreenCTM();
+  return {
+    x: (evt.clientX - CTM.e) / CTM.a,
+    y: (evt.clientY - CTM.f) / CTM.d
+  };
+}
+
+</script>
+</html>
