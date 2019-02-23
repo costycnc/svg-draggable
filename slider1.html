@@ -19,6 +19,7 @@ var SVG_TARGET_ELEMENT = "costy";
 var nIndex=0;
 var selectedElement = false;
 var svg;
+var doc;
 
 //########## when click "Circle" button >>> create new element
 
@@ -39,20 +40,20 @@ element.setAttributeNS(null, 'class', "draggable");
 function myFunction2(el){
 
 
-var tc="<html><body>bla</body></html>";
-
-var doc = document.implementation.createHTMLDocument("test"); 
+doc = document.implementation.createHTMLDocument("test"); 
 doc.write(el);
-console.log(doc);
+
+  var resu = doc.getElementsByTagName("path")[0]; 
+resu.getAttributeNS(null, 'd');
+
+  //var resu = doc.getElementsByTagName("path")[0].getAttribute("class"); 
+console.log(resu.getAttributeNS(null, 'd'));
 
 
-var d = document.implementation.createDocument('http://www.w3.org/2000/svg', 'svg', null);
 
-
-
-nIndex++;
-var element = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+var element = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
 svg.appendChild(element);
+
 element.setAttributeNS(null, 'cx', 100);
 element.setAttributeNS(null, 'cy', 100);
 element.setAttributeNS(null, 'r', 30);
