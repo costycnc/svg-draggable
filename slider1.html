@@ -1,17 +1,7 @@
 <html>
 
-<head>
-<style>
-div {
-  width: 200px;
-  height: 100px;
-  border: 1px solid black;
-}
-</style>
-</head>
-<body>
-<div onmousemove="showCoords(event)" onmouseout="clearCoor()"></div>
-<p id="demo"></p>
+
+
 
 <input id="slider-x" type="range" min="1" max="160" value="20" oninput="moveSlider(this, 'cx')"><br>
 <input id="slider-y" type="range" min="1" max="140" value="10" oninput="moveSlider(this, 'cy')"><br>
@@ -21,9 +11,9 @@ div {
 
 
 
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 200">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 200" onload="makeDraggable(evt)">
   <rect width="300" height="300" fill="#eee"></rect>
-  <circle onclick="setSVGTarget(this.id)" id="costy" cx="100" cy="100" r="30"></circle>
+  <circle class="draggable" id="costy" cx="100" cy="100" r="30"></circle>
 
 </svg>
 
@@ -32,10 +22,7 @@ div {
 var svg = document.getElementsByTagName('svg')[0];
 var SVG_TARGET_ELEMENT = "costy";
 var nIndex=0;
-
-function setSVGTarget(targetID) 
-{SVG_TARGET_ELEMENT = targetID;}
-
+var selectedElement = false;
 
 
 function myFunction1(){
@@ -50,7 +37,7 @@ element.setAttributeNS(null, 'cx', 100);
 element.setAttributeNS(null, 'cy', 100);
 element.setAttributeNS(null, 'r', 30);
 element.setAttributeNS(null, 'id', "costy"+nIndex);
-element.setAttributeNS(null, 'onclick', "setSVGTarget(this.id)");
+element.setAttributeNS(null, 'class', "draggable");
 
 }
 function myFunction(){
@@ -65,17 +52,44 @@ var moveSlider = function(slider, direction) {
 	circle.setAttributeNS(null, direction, value);
 }
 
+function makeDraggable(evt) {
+  var svg = evt.target;
+  svg.addEventListener('mousedown', startDrag);
+  svg.addEventListener('mousemove', drag);
+  svg.addEventListener('mouseup', endDrag);
+  svg.addEventListener('mouseleave', endDrag);
 
-function showCoords(event) {
-  var x = event.clientX;
-  var y = event.clientY;
-  var coor = "X coords: " + x + ", Y coords: " + y;
-  document.getElementById("demo").innerHTML = coor;
+  function startDrag(evt) {
+
+if (evt.target.classList.contains('draggable')) {
+    selectedElement = evt.target;
+console.log(selectedElement);
+  }
+  }
+  function drag(evt) {
+ if (selectedElement) {
+    evt.preventDefault();
+    var coord = getMousePosition(evt);
+    selectedElement.setAttributeNS(null, "cx", coord.x);
+    selectedElement.setAttributeNS(null, "cy", coord.y);
+
+    //var x = parseFloat(selectedElement.getAttributeNS(null, "cx"));
+    //selectedElement.setAttributeNS(null, "cx", x +1);
+  }
+
+  }
+  function endDrag(evt) {
+selectedElement = null;
+  }
 }
 
-function clearCoor() {
-  document.getElementById("demo").innerHTML = "";
+function getMousePosition(evt) {
+  var CTM = svg.getScreenCTM();
+  return {
+    x: (evt.clientX - CTM.e) / CTM.a,
+    y: (evt.clientY - CTM.f) / CTM.d
+  };
 }
+
 </script>
-</body>
 </html>
