@@ -2,6 +2,7 @@
 
 <button onclick="myFunction()">Delete</button>
 <button onclick="myFunction1()">Circle</button>
+<input type="file" accept='.svg' id="file-input" />
 
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 200" onload="makeDraggable(evt)">
   <rect width="300" height="300" fill="#eee"></rect>
@@ -11,12 +12,16 @@
 
 
 <script type="text/javascript">
+
+
+//-----initialise variables--------------------------------
 var SVG_TARGET_ELEMENT = "costy";
 var nIndex=0;
 var selectedElement = false;
 var svg;
 
-//create new element
+//########## when click "Circle" button >>> create new element
+
 function myFunction1(){
 nIndex++;
 var element = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
@@ -66,6 +71,24 @@ function getMousePosition(evt) {
     y: (evt.clientY - CTM.f) / CTM.d
   };
 }
+
+
+function readSingleFile(e) {
+  var file = e.target.files[0];
+  if (!file) {
+    return;
+  }
+  var reader = new FileReader();
+  reader.onload = function(e) {
+    var contents = e.target.result;
+    alert(contents);
+    //displayContents(contents);
+  };
+  reader.readAsText(file);
+}
+//quando event "change" 
+document.getElementById('file-input')
+  .addEventListener('change', readSingleFile, false);
 
 </script>
 </html>
