@@ -4,6 +4,8 @@
 </head>
 <body>
 <input id="slider-x" type="range" min=".2" max="5" value="1" step=".1"  oninput="moveSlider(this)">
+  <input type="checkbox" id="x" checked>X
+  <input type="checkbox" id="y" checked>Y
 <input id="slider-y" type="range" min="-100" max="100" value="0"   oninput="moveSlider1(this)">
 <button onclick="myFunction()">Delete</button>
 <button onclick="myFunction1()">Circle</button>
@@ -25,32 +27,47 @@
 
 
 //-----initialise variables--------------------------------
-var SVG_TARGET_ELEMENT = "costy";
+var SVG_TARGET_ELEMENT = "1";
 var costy=1;
 var selectedElement = false;
 var offset;
 var svg,tmpx,tmpy;
-var value =[],rot=[];
+var value =[],rot=[],xb=[],yb=[];
 value[costy]=1;
-     rot[costy]=1;
+rot[costy]=1;
+xb[costy]=1;
+yb[costy]=1;
 
 
 
 
 
-//read slider scale(1)
+//zoom slider scale(1)
 function moveSlider(slider) {
 
 	var circle = document.getElementById(SVG_TARGET_ELEMENT);
       var tab=circle.getAttributeNS(null, 'id');
-	value[tab] = slider.value;
-circle.setAttributeNS(null, "transform","translate("+tmpx+","+tmpy+") scale("+value[tab]+") rotate("+rot[tab]+")");
+     
+	value[tab] = slider.value;;
+console.log(costy);
+var x=xb[costy];
+var y=yb[costy];
+if(document.getElementById("x").checked){
+x=slider.value;
+}
+if(document.getElementById("y").checked){
+y=slider.value
+}
+      
+circle.setAttributeNS(null, "transform","translate("+tmpx+","+tmpy+") scale("+x+","+y+") rotate("+rot[tab]+")");
 
-
+//save x e y
+xb[costy]=x;
+yb[costy]=y;
 
 	
 }
-
+//rotate slider
 function moveSlider1(slider) {
 
 	var circle = document.getElementById(SVG_TARGET_ELEMENT);
@@ -71,8 +88,6 @@ element.setAttributeNS(null, 'y', 0);
 element.setAttributeNS(null, 'r', 30);
 element.setAttributeNS(null, 'id', costy);
 element.setAttributeNS(null, 'class', "draggable");
-value[costy]=1;
-rot[costy]=1;
 }
 
 function myFunction2(el){
@@ -95,8 +110,7 @@ element.setAttributeNS(null, 'd', bro);
 element.setAttributeNS(null, 'fill', "black");
 element.setAttributeNS(null, 'fill-rule', "evenodd");
 element.setAttributeNS(null, 'stroke', "none");
-value[costy]=1;
-rot[costy]=1;
+
 }
 
 
@@ -135,6 +149,9 @@ tmpy=coord.y-offset.y
 console.log(tab);
 
           selectedElement.setAttributeNS(null, "transform","translate("+tmpx+","+tmpy+") scale("+value[tab]+") rotate("+rot[tab]+")");
+
+selectedElement.setAttributeNS(null, "transform","translate("+tmpx+","+tmpy+") scale("+xb[costy]+","+yb[costy]+") rotate("+rot[tab]+")");
+
 
 
 }}
