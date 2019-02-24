@@ -4,13 +4,16 @@
 </head>
 <body>
 <input id="slider-x" type="range" min=".2" max="5" value="1" step=".1"  oninput="moveSlider(this)">
-<input id="slider-y" type="range" min="-20" max="100" value="0"   oninput="moveSlider1(this)">
+<input id="slider-y" type="range" min="-100" max="100" value="0"   oninput="moveSlider1(this)">
 <button onclick="myFunction()">Delete</button>
 <button onclick="myFunction1()">Circle</button>
 <input type="file" accept='.svg' id="file-input" />
 
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 200" onload="makeDraggable(evt)">
   <rect width="300" height="300" fill="#eee"></rect>
+
+<path x="0" y="0" id="1" class="draggable" d="M58.500 13.031 C 43.956 15.275,25.719 22.757,22.329 27.870 C 20.170 31.126,19.917 42.972,21.904 47.769 C 23.942 52.689,26.721 52.836,35.754 48.501 C 48.566 42.351,56.675 39.928,66.533 39.304 C 87.173 37.997,95.000 45.037,95.000 64.904 L 95.000 70.710 77.750 71.324 C 53.404 72.191,40.741 75.176,29.203 82.771 C 17.316 90.594,11.366 105.507,13.826 121.310 C 16.533 138.698,26.593 149.420,44.496 153.999 C 63.000 158.731,83.088 154.334,95.584 142.816 L 100.000 138.745 100.000 144.301 C 100.000 150.714,101.338 152.597,106.591 153.583 C 111.958 154.590,126.622 153.559,128.444 152.046 C 129.861 150.870,130.027 145.349,129.964 101.613 C 129.887 48.446,129.591 44.817,124.488 34.386 C 119.590 24.375,111.116 18.154,97.328 14.449 C 90.323 12.566,67.023 11.715,58.500 13.031 M95.000 104.855 L 95.000 115.710 89.677 120.745 C 83.024 127.036,77.273 130.013,70.398 130.723 C 63.025 131.484,56.672 129.529,53.028 125.379 C 45.807 117.155,47.231 105.184,56.132 99.294 C 61.648 95.644,69.246 94.184,83.250 94.084 L 95.000 94.000 95.000 104.855 " fill="black" fill-rule="evenodd" stroke="none" transform="translate(0,0) scale(1) rotate(1)"></path>
+
 
 </svg>
 
@@ -23,11 +26,16 @@
 
 //-----initialise variables--------------------------------
 var SVG_TARGET_ELEMENT = "costy";
-var costy=0;
+var costy=1;
 var selectedElement = false;
 var offset;
 var svg,tmpx,tmpy;
 var value =[],rot=[];
+value[costy]=1;
+     rot[costy]=1;
+
+
+
 
 
 //read slider scale(1)
@@ -36,7 +44,9 @@ function moveSlider(slider) {
 	var circle = document.getElementById(SVG_TARGET_ELEMENT);
       var tab=circle.getAttributeNS(null, 'id');
 	value[tab] = slider.value;
-     circle.setAttributeNS(null, "transform","translate("+tmpx+","+tmpy+") scale("+value[tab]+")");
+circle.setAttributeNS(null, "transform","translate("+tmpx+","+tmpy+") scale("+value[tab]+") rotate("+rot[tab]+")");
+
+
 
 	
 }
@@ -45,7 +55,6 @@ function moveSlider1(slider) {
 
 	var circle = document.getElementById(SVG_TARGET_ELEMENT);
       var tab=circle.getAttributeNS(null, 'id');
-	value[tab] = slider.value;
      rot[tab] = slider.value;
      circle.setAttributeNS(null, "transform","translate("+tmpx+","+tmpy+") scale("+value[tab]+") rotate("+rot[tab]+")");
 
@@ -123,7 +132,7 @@ tmpy=coord.y-offset.y
     selectedElement.setAttributeNS(null, "y", tmpy);
     var tab=selectedElement.getAttributeNS(null, 'id');
 
-console.log(value[tab]);
+console.log(tab);
 
           selectedElement.setAttributeNS(null, "transform","translate("+tmpx+","+tmpy+") scale("+value[tab]+") rotate("+rot[tab]+")");
 
