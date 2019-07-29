@@ -1,0 +1,23 @@
+<svg viewBox="0 0 1000 600"
+     xmlns="http://www.w3.org/2000/svg"
+     xmlns:xlink="http://www.w3.org/1999/xlink">
+        <style>
+            @import url("https://fonts.googleapis.com/css?family=Pacifico:400,400i,700,700i");
+        </style>
+
+    <style><![CDATA[svg text{stroke:none}]]></style>
+  <defs>
+    <path id="MyPath" d="M 20 40 Q 260 240 400 500" />
+  </defs>
+  <use xlink:href="#MyPath" fill="none" stroke="#59fa81" />
+  <text font-family="Pacifico" font-size="100.5">
+    <textPath xlink:href="#MyPath">
+    Wow such a nice SVG tut
+    </textPath>
+  </text>
+
+</svg>
+
+
+
+        
