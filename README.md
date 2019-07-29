@@ -8,3 +8,5 @@ create delete edit svg http://www.petercollingridge.co.uk/tutorials/svg/interact
 trace bitmap simple (de studiat) https://github.com/rshest/bitmap-outline
 
 svg to canvas to png http://bl.ocks.org/biovisualize/8187844
+
+manipulate html,svg,css https://d3js.org/d3.v5.min.js
