@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html>
+  <head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+    <script type="text/javascript" src="d3.v5.min.js"></script>
+
+
+  </head>
+  <body>
+<button onclick="my()">Put</button>
+<button onclick="alinea()">Alinea</button><br><br>
+ Last name: <input type="text" id="litera" value="Test"><br>
+
+  <input type="range" min="1" max="200" value="100" class="slider" id="myRange" 
+   oninput="dimensiune(this.value)" onchange="dimensiune(this.value)"><br>
+<div class="svg-container">
+<svg id="click" xmlns="http://www.w3.org/2000/svg" width="600" height="300">
+
+
+
+
+    <defs>
+<style>
+@font-face {
+  font-family: 'Cookie';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: local('Cookie-Regular'), url('font.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+</style>
+
+        <g id="pointer" transform="scale(1.8)">
+
+           
+            <path d="M0-1c-14.5-25.6-14.5-25.7-14.5-33.8c0-8.1,6.5-14.6,14.5-14.6s14.5,6.6,14.5,14.6C14.5-26.7,14.5-26.6,0-1z"></path>
+            <path d="M0-49c7.7,0,14,6.3,14,14.1c0,8,0,8.1-14,32.8c-14-24.7-14-24.9-14-32.8C-14-42.7-7.7-49,0-49 M0-50c-8.3,0-15,6.8-15,15.1 S-15-26.5,0,0c15-26.5,15-26.5,15-34.9S8.3-50,0-50L0-50z"></path>
+        
+</g>
+    </defs>
+</svg>
+</div>
+
+<script>
+
+
+function my() {
+
+var asd=document.getElementById("litera").value;
+
+
+var svg = d3.select("g");
+
+for (i = 0; i < asd.length; i++) {
+ 
+    svg.append("text").text(asd[i])
+    .attr("x", i*30)
+    .attr("y", 50)
+    .attr("font-size","100px")
+    .attr("font-family","Cookie")
+    .attr("text-anchor","middle");
+}
+
+
+
+var svg = d3.select("svg");
+dragHandler(svg.selectAll("use"));
+dragHandler(svg.selectAll("text"));
+
+}
+
+
+
+
+function alinea() {
+
+
+var svg = d3.selectAll("text");
+  
+    svg.attr("y", 50)
+    
+
+
+}
+
+
+function dimensiune(numar){
+var svg = d3.selectAll("text");
+svg.attr("font-size",numar);
+}
+
+
+
+
+var svg = d3.select("svg");
+
+
+svg.append("use")
+    .attr("href", "#pointer")
+    .attr("x", 50)
+    .attr("y", 50)
+    .attr("fill", "#039BE5")
+    .attr("stroke", "#039BE5")
+    .attr("stroke-width", "1px");
+
+var deltaX, deltaY;
+
+var dragHandler = d3.drag()
+    .on("start", function () {
+        var current = d3.select(this);
+        deltaX = current.attr("x") - d3.event.x;
+        deltaY = current.attr("y") - d3.event.y;
+    })
+    .on("drag", function () {
+        d3.select(this)
+            .attr("x", d3.event.x + deltaX)
+            .attr("y", d3.event.y + deltaY);
+    });
+
+dragHandler(svg.selectAll("use"));
+dragHandler(svg.selectAll("text"));
+
+
+</script>
+
+
+
+  </body>
+</html>
